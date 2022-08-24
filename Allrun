@@ -1,0 +1,42 @@
+#!/bin/bash
+cd ${0%/*} || exit 1    # Run from this directory
+
+# Source tutorial run functions
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+# Build the basic mesh
+# --------------------
+echo 'Running blockMesh'
+blockMesh > log.blockMesh 2>&1
+
+# Decompose the mesh
+# ------------------
+echo 'Running decomposePar'
+decomposePar > log.decomposePar 2>&1
+
+# Imprint Bolund Hill into the mesh using moveMesh
+# -----------------------------------------------
+
+# Set controlDict, fvSchemes, and fvSolution for the moveMesh solver
+cp system/controlDict.moveMesh system/controlDict
+cp system/fvSchemes.moveMesh system/fvSchemes
+cp system/fvSolution.moveMesh system/fvSolution
+
+# Get number of cores from the setUp file
+nCores=$(foamDictionary -entry nCores -value setUp)
+
+# Run moveMesh solver
+echo 'Running moveMesh'
+mpirun -np $nCores moveMesh -parallel > log.moveMesh 2>&1
+
+# Reconstruct the mesh
+# --------------------
+echo 'Running reconstructPar'
+reconstructPar -latestTime > log.reconstructPar.1 2>&1
+
+# Mesh refinement near the surface
+# --------------------------------
+echo 'Running topoSet'
+topoSet -latestTime > log.topoSet 2>&1
+
+echo 'Running refineMesh'

@@ -1,0 +1,66 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.2.2                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      epsilon;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 2 -3 0 0 0 0];
+
+internalField   uniform 1;
+
+boundaryField
+{
+    east
+    {
+        type            zeroGradient;
+		
+    }
+    north
+    {
+        type            zeroGradient;
+		
+    }
+    south
+    {
+        type            zeroGradient;
+		
+    }
+    west
+    {
+        type            logProfileDissipationRateInlet;
+        UfreeStream     10;
+        uDirection      (1.0000 0.0000 0.0000);
+        inputWindHeight_Veg 10;
+        z0              0.01;
+        Rd              0;
+        firstCellHeight 5.51;
+        value           uniform 1;
+    }
+
+    minZ
+    {
+        type            epsilonNonEquiWallFunction;
+        Cmu             0.09;
+        kappa           0.41;
+        E               9.8;
+        value           uniform 1;
+    }
+    maxZ
+    {
+        type            zeroGradient;
+    }
+}
+
+
+// ************************************************************************* //
