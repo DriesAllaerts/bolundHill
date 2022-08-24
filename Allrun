@@ -4,6 +4,15 @@ cd ${0%/*} || exit 1    # Run from this directory
 # Source tutorial run functions
 . $WM_PROJECT_DIR/bin/tools/RunFunctions
 
+# Extract stl file of the surface
+FILE=./constant/triSurface/Bolund_GeoTIFF_file.stl
+if [ ! -f "$FILE" ]; then
+    echo "Unpacking BolundGeoTiff.tar.gz"
+    cd constant/triSurface
+    tar -xzvf Bolund_GeoTIFF.tar.gz
+    cd ../../
+fi
+
 # Build the basic mesh
 # --------------------
 echo 'Running blockMesh'
@@ -36,7 +45,16 @@ reconstructPar -latestTime > log.reconstructPar.1 2>&1
 
 # Mesh refinement near the surface
 # --------------------------------
+
+# Set controlDict, fvSchemes, and fvSolution for the simpleFoam solver
+# here as refinemesh uses some inputs from controlDict (which differs from
+# the moveMesh controlDict)
+cp system/controlDict.simpleFoam system/controlDict
+cp system/fvSchemes.simpleFoam system/fvSchemes
+cp system/fvSolution.simpleFoam system/fvSolution
+
 echo 'Running topoSet'
 topoSet -latestTime > log.topoSet 2>&1
 
 echo 'Running refineMesh'
+refineMesh > log.refineMesh 2>&1

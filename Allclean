@@ -3,4 +3,4 @@
 rm log.*
 rm -r constant/polyMesh
 rm -r processor*
-rm -r 1 50
+rm -r 1 50 51
