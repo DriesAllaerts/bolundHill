@@ -13,23 +13,24 @@ if [ ! -f "$FILE" ]; then
     cd ../../
 fi
 
+# Set controlDict, fvSchemes, and fvSolution for the moveMesh solver
+cp system/controlDict.moveMesh system/controlDict
+cp system/fvSchemes.moveMesh system/fvSchemes
+cp system/fvSolution.moveMesh system/fvSolution
+cp system/dynamicMeshDict constant/dynamicMeshDict
+
 # Build the basic mesh
 # --------------------
 echo 'Running blockMesh'
 blockMesh > log.blockMesh 2>&1
 
-# Decompose the mesh
-# ------------------
+# Decompose the mesh (for moveMesh)
+# --------------------------------
 echo 'Running decomposePar'
-decomposePar > log.decomposePar 2>&1
+decomposePar > log.decomposePar.1 2>&1
 
 # Imprint Bolund Hill into the mesh using moveMesh
 # -----------------------------------------------
-
-# Set controlDict, fvSchemes, and fvSolution for the moveMesh solver
-cp system/controlDict.moveMesh system/controlDict
-cp system/fvSchemes.moveMesh system/fvSchemes
-cp system/fvSolution.moveMesh system/fvSolution
 
 # Get number of cores from the setUp file
 nCores=$(foamDictionary -entry nCores -value setUp)
@@ -42,6 +43,8 @@ mpirun -np $nCores moveMesh -parallel > log.moveMesh 2>&1
 # --------------------
 echo 'Running reconstructPar'
 reconstructPar -latestTime > log.reconstructPar.1 2>&1
+
+rm -r processor*
 
 # Mesh refinement near the surface
 # --------------------------------
@@ -58,3 +61,38 @@ topoSet -latestTime > log.topoSet 2>&1
 
 echo 'Running refineMesh'
 refineMesh > log.refineMesh 2>&1
+
+# Check mesh quality
+# ------------------
+echo 'Running checkMesh'
+checkMesh > log.checkMesh 2>&1
+
+# Copy over the field variables from the zero folder
+# --------------------------------------------------
+echo 'Copying field variables from 0 folder'
+cp 0/U 51/U
+cp 0/epsilon 51/epsilon
+cp 0/k 51/k
+cp 0/nut 51/nut
+cp 0/p 51/p
+
+# Renumber mesh
+# -------------
+echo 'Running renumberMesh'
+renumberMesh -latestTime -overwrite > log.renumberMesh 2>&1
+
+# initialize fields?
+
+# Decompose the mesh (for simpleFoam)
+# -----------------------------------
+echo 'Running decomposePar'
+decomposePar -force > log.decomposePar.2 2>&1
+
+# Run simpleFoam
+# --------------
+# Remove dynamicMeshDict from constant, otherwise simpleFoam does not work
+rm constant/dynamicMeshDict
+
+# Run the solver
+echo 'Running simpleFoam'
+mpirun -np $nCores simpleFoam -parallel > log.simpleFoam 2>&1

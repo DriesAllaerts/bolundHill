@@ -14,51 +14,53 @@ FoamFile
     object      epsilon;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+#include "../setUp"
 
 dimensions      [0 2 -3 0 0 0 0];
 
-internalField   uniform 1;
+internalField   uniform 0.01;
 
 boundaryField
 {
     east
     {
-        type            zeroGradient;
+        type            inletOutlet;
+        inletValue      uniform 0.01;
+        value           $internalField;
 		
     }
     north
     {
-        type            zeroGradient;
+        type            slip;
 		
     }
     south
     {
-        type            zeroGradient;
+        type            slip;
 		
     }
     west
     {
-        type            logProfileDissipationRateInlet;
-        UfreeStream     10;
-        uDirection      (1.0000 0.0000 0.0000);
-        inputWindHeight_Veg 10;
-        z0              0.01;
-        Rd              0;
-        firstCellHeight 5.51;
-        value           uniform 1;
+        type            atmBoundaryLayerInletEpsilon;
+        Uref            $Uref;
+        Zref            $Zref;
+        zDir            (0 0 1);
+        flowDir         (1 0 0);
+        z0              uniform $z0;
+        zGround         uniform 0.75;
     }
 
     minZ
     {
-        type            epsilonNonEquiWallFunction;
+        type            epsilonWallFunction;
         Cmu             0.09;
-        kappa           0.41;
+        kappa           0.4;
         E               9.8;
-        value           uniform 1;
+        value           $internalField;
     }
     maxZ
     {
-        type            zeroGradient;
+        type            slip;
     }
 }
 

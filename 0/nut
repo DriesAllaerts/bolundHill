@@ -14,6 +14,7 @@ FoamFile
     object      nut;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+#include "../setUp"
 
 dimensions      [0 2 -1 0 0 0 0];
 
@@ -21,39 +22,38 @@ internalField   uniform 0;
 
 boundaryField
 {
-    north //maxY
+    north
     {
-        type         calculated;//   symmetryPlane;
-        value uniform 0;
+        type         slip;
     }
+
+    south
+    {
+        type            slip;
+    }
+
     west
     {
         type            calculated;
         value           uniform 0;
     }
-    east //maxX
+
+    east
     {
         type            calculated;
         value           uniform 0;
     }
-    south //minY
-    {
-        //type            symmetryPlane;
-        type            calculated;
-        value           uniform 0;
-    }
+
     minZ
     {
-        type            nutNonEquiWallFunction;
-        Cmu             0.09;
-        kappa           0.41;
-        E               9.8;
-        value           uniform 0.1;
+        type            nutkAtmRoughWallFunction;
+        z0              uniform $z0;
+        value           uniform 0.0;
     }
+
     maxZ
     {
-        type            calculated;
-        value           uniform 0;
+        type            slip;
     }
 }
 

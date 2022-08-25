@@ -1,2 +1,7 @@
 // Number of cores
 nCores      2;
+
+// Wind flow
+Uref            10.0; // Reference wind speed [m/s]
+Zref            10.0; // Reference height above the surface [m]
+z0              0.01; // Surface roughness length [m]

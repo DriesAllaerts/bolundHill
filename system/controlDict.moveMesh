@@ -44,4 +44,6 @@ timePrecision   10;
 
 runTimeModifiable yes;
 
+libs ("libatmosphericModels.so");
+
 // ************************************************************************* //
