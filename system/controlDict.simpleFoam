@@ -46,4 +46,9 @@ runTimeModifiable yes;
 
 libs ("libatmosphericModels.so");
 
+functions
+{
+    #include "sampleDict"
+}
+
 // ************************************************************************* //

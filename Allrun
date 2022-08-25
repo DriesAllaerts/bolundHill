@@ -95,4 +95,15 @@ rm constant/dynamicMeshDict
 
 # Run the solver
 echo 'Running simpleFoam'
-mpirun -np $nCores simpleFoam -parallel > log.simpleFoam 2>&1
+mpirun -np $nCores simpleFoam -parallel -noFunctionObjects > log.simpleFoam 2>&1
+
+# Reconstruct the mesh
+# --------------------
+echo 'Running reconstructPar'
+reconstructPar -latestTime > log.reconstructPar.2 2>&1
+
+# Postprocessing (optional)
+# -------------------------
+# Extract wind speed at 10-m above ground level
+# (takes quite a long time)
+# simpleFoam -postProcess -latestTime

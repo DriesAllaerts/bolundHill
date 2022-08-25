@@ -23,16 +23,24 @@ boundaryField
 {
     east
     {
-        type            uniformFixedValue;
-        uniformValue    constant 0;
+        type            totalPressure;
+        value           uniform 0;
+        gamma           1;
+        p0              uniform 0;
 	}
     north
     {
-        type            slip;
+        type            totalPressure;
+        value           uniform 0;
+        gamma           1;
+        p0              uniform 0;
 	}
     south
     {
-        type            slip;
+        type            totalPressure;
+        value           uniform 0;
+        gamma           1;
+        p0              uniform 0;
 	}
     west
     {
@@ -46,7 +54,8 @@ boundaryField
     }
     maxZ
     {
-        type            slip;
+        type            fixedValue;
+        value           uniform 0;
     }
 }
 
