@@ -1,0 +1,32 @@
+transects
+{
+    type                 surfaces;
+    functionObjectLibs   ("libsampling.so");
+    enabled              true;
+    interpolationScheme  cell;
+    surfaceFormat        vtk;
+    fields
+    (
+        U
+        k
+    );
+    surfaces
+    (
+        transectA
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            point           (0.0 0.0 15.0);
+            normal          (0.51503807491 -0.8571673007 0);
+            triangulate     false;
+        }
+        transectB
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            point           (0.0 0.0 15.0);
+            normal          (0 1 0);
+            triangulate     false;
+        }
+    );
+}

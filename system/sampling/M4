@@ -1,0 +1,19 @@
+M4
+{
+      type                  probes;
+      functionObjectLibs    ("libsampling.so");
+      name                  M4;
+      enabled               true;
+      fields
+      (
+          U
+          k
+      );
+      
+      probeLocations
+      (
+               (51.5 30.6 2.8)
+               (51.5 30.6 5.8)
+               (51.5 30.6 9.8)
+      );
+}

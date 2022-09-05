@@ -14,7 +14,7 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-refSurface
+zagl10m
 {
     type                surfaces;
     functionObjectLibs  ("libsampling.so");

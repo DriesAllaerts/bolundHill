@@ -1,0 +1,19 @@
+M3
+{
+      type                  probes;
+      functionObjectLibs    ("libsampling.so");
+      name                  M3;
+      enabled               true;
+      fields
+      (
+          U
+          k
+      );
+      
+      probeLocations
+      (
+               (3.2 0.0 13.7)
+               (3.2 0.0 16.7)
+               (3.2 0.0 20.7)
+      );
+}

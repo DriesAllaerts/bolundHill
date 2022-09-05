@@ -1,13 +1,12 @@
 /*--------------------------------*- C++ -*----------------------------------*\
-| =========                 |                                                 |
-| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  2.2.0                                   |
-|   \\  /    A nd           | Web:      http://www.OpenFOAM.org               |
-|    \\/     M anipulation  |                                                 |
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  10
+     \\/     M anipulation  |
 \*---------------------------------------------------------------------------*/
 FoamFile
 {
-    version     2.0;
     format      ascii;
     class       dictionary;
     object      controlDict;
@@ -48,7 +47,16 @@ libs ("libatmosphericModels.so");
 
 functions
 {
-    #include "sampleDict"
+    //#include "sampling/zagl10m"
+    #include "sampling/M1"
+    #include "sampling/M2"
+    #include "sampling/M3"
+    #include "sampling/M4"
+    #include "sampling/M5"
+    #include "sampling/M6"
+    #include "sampling/M7"
+    #include "sampling/M8"
+    #include "sampling/transects"
 }
 
 // ************************************************************************* //

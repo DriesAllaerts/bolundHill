@@ -1,0 +1,19 @@
+M8
+{
+      type                  probes;
+      functionObjectLibs    ("libsampling.so");
+      name                  M8;
+      enabled               true;
+      fields
+      (
+          U
+          k
+      );
+      
+      probeLocations
+      (
+               (92.0 -0.1 3.8)
+               (92.0 -0.1 6.7)
+               (92.0 -0.1 10.8)
+      );
+}

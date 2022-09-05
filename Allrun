@@ -56,11 +56,19 @@ cp system/controlDict.simpleFoam system/controlDict
 cp system/fvSchemes.simpleFoam system/fvSchemes
 cp system/fvSolution.simpleFoam system/fvSolution
 
-echo 'Running topoSet'
-topoSet -latestTime > log.topoSet 2>&1
+# Get number of refinement levels from the setUp file
+nRefinement=$(foamDictionary -entry nRefinement -value setUp)
 
-echo 'Running refineMesh'
-refineMesh > log.refineMesh 2>&1
+# For every refinement level, identify the cells to be refined with
+# topoSet and then apply refineMesh
+for ((i=1; i<=$nRefinement; i++))
+do
+    echo "Running topoSet (i=$i)"
+    topoSet -latestTime > log.topoSet.$i 2>&1
+    
+    echo "Running refineMesh (i=$i)"
+    refineMesh > log.refineMesh.$i 2>&1
+done
 
 # Check mesh quality
 # ------------------
@@ -69,12 +77,14 @@ checkMesh > log.checkMesh 2>&1
 
 # Copy over the field variables from the zero folder
 # --------------------------------------------------
-echo 'Copying field variables from 0 folder'
-cp 0/U 51/U
-cp 0/epsilon 51/epsilon
-cp 0/k 51/k
-cp 0/nut 51/nut
-cp 0/p 51/p
+latestTime=$(( 50 + $nRefinement ))
+echo "Copying field variables from 0 to $latestTime folder"
+
+cp 0/U $latestTime/U
+cp 0/epsilon $latestTime/epsilon
+cp 0/k $latestTime/k
+cp 0/nut $latestTime/nut
+cp 0/p $latestTime/p
 
 # Renumber mesh
 # -------------

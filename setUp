@@ -1,7 +1,36 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  10
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+
 // Number of cores
 nCores      2;
 
-// Wind flow
+// Wind conditions
 Uref            10.0; // Reference wind speed [m/s]
 Zref            10.0; // Reference height above the surface [m]
 z0              0.01; // Surface roughness length [m]
+
+// Mesh parameters
+// - domain size
+xMin            -97.875;    // Minimum x-extent of domain [m]
+yMin            -131.875;   // Minimum y-extent of domain [m]
+zMin           13.24885;    // Minimum z-extent of domain [m]
+xMax            191.875;    // Maximum x-extent of domain [m]
+yMax            117.875;    // Maximum y-extent of domain [m]
+zMax            40.8226;    // Maximum z-extent of domain [m]
+
+// - number of cells
+//   Suggested mesh size
+//   coarse - (53 46 5) and nRefinement = 1
+//   medium - (67 58 6) and nRefinement = 1
+//   fine   - (84 73 8) and nRefinement = 2
+nx              84;         // Number of cells in x-direction
+ny              73;         // Number of cells in y-direction
+nz              8;          // Number of cells in z-direction
+
+// - number of refinements near the surface
+nRefinement     2;

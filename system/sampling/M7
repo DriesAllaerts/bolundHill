@@ -1,0 +1,18 @@
+M7
+{
+      type                  probes;
+      functionObjectLibs    ("libsampling.so");
+      name                  M7;
+      enabled               true;
+      fields
+      (
+          U
+          k
+      );
+      
+      probeLocations
+      (
+               (-66.9 0.0 2.8)
+               (-66.9 0.0 5.8)
+      );
+}

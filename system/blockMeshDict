@@ -1,45 +1,36 @@
-/*---------------------------------------------------------------------------*\
-| =========                 |                                                 |
-| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  2.2.0                                 |
-|   \\  /    A nd           | Web:      http://www.openfoam.org               |
-|    \\/     M anipulation  |                                                 |
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  10
+     \\/     M anipulation  |
 \*---------------------------------------------------------------------------*/
-
 FoamFile
 {
-    version         2.0;
     format          ascii;
-
-    root            "";
-    case            "";
-    instance        "";
-    local           "";
-
     class           dictionary;
     object          blockMeshDict;
 }
-
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-
+#include "../setUp"
 
 convertToMeters 1;
 
 vertices
 (
-    (-97.875  -131.875  13.248849999999999)
-    (191.875  -131.875  13.248849999999999)
-    (191.875  117.875  13.248849999999999)
-    (-97.875  117.875  13.248849999999999)
-    (-97.875  -131.875  40.822600000000001)
-    (191.875  -131.875  40.822600000000001)
-    (191.875  117.875  40.822600000000001)
-    (-97.875  117.875  40.822600000000001)
+    ( $xMin   $yMin   $zMin)
+    ( $xMax   $yMin   $zMin)
+    ( $xMax   $yMax   $zMin)
+    ( $xMin   $yMax   $zMin)
+    ( $xMin   $yMin   $zMax)
+    ( $xMax   $yMin   $zMax)
+    ( $xMax   $yMax   $zMax)
+    ( $xMin   $yMax   $zMax)
 );
 
 blocks
 (
-    hex (0 1 2 3 4 5 6 7) (53 46 5) simpleGrading (1.0 1.0 1)
+    hex (0 1 2 3 4 5 6 7) ($nx $ny $nz) simpleGrading (1.0 1.0 1)
 );
 
 edges

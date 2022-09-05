@@ -1,0 +1,18 @@
+M5
+{
+      type                  probes;
+      functionObjectLibs    ("libsampling.so");
+      name                  M5;
+      enabled               true;
+      fields
+      (
+          U
+          k
+      );
+      
+      probeLocations
+      (
+               (1.5 -48.9 4.8)
+               (1.5 -48.9 7.8)
+      );
+}
