@@ -5,3 +5,5 @@ rm -r constant/polyMesh
 rm -r processor*
 rm -r [1-9]*
 rm -r postProcessing
+rm -r dynamicCode
+rm -r 0

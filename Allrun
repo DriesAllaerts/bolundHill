@@ -14,6 +14,7 @@ if [ ! -f "$FILE" ]; then
 fi
 
 # Set controlDict, fvSchemes, and fvSolution for the moveMesh solver
+cp -r 0.original 0
 cp system/controlDict.moveMesh system/controlDict
 cp system/fvSchemes.moveMesh system/fvSchemes
 cp system/fvSolution.moveMesh system/fvSolution
