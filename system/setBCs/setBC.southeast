@@ -1,0 +1,29 @@
+# Set U boundary conditions
+foamDictionary 0/U -entry boundaryField/north -set "{type pressureInletOutletVelocity; value uniform (0 0 0);}" > /dev/null
+foamDictionary 0/U -entry boundaryField/east  -set "{type atmBoundaryLayerInletVelocity; Uref \$Uref; Zref \$Zref; zDir (0 0 1); flowDir (#calc \"cos(\$flowAngle)\" #calc \"sin(\$flowAngle)\" 0); z0 uniform \$z0; zGround uniform 0.75;}" > /dev/null
+foamDictionary 0/U -entry boundaryField/south -set "{type atmBoundaryLayerInletVelocity; Uref \$Uref; Zref \$Zref; zDir (0 0 1); flowDir (#calc \"cos(\$flowAngle)\" #calc \"sin(\$flowAngle)\" 0); z0 uniform \$z0; zGround uniform 0.75;}" > /dev/null
+foamDictionary 0/U -entry boundaryField/west  -set "{type pressureInletOutletVelocity; value uniform (0 0 0);}" > /dev/null
+
+# Set epsilon boundary conditions
+foamDictionary 0/epsilon -entry boundaryField/north -set "{type zeroGradient;}" > /dev/null
+foamDictionary 0/epsilon -entry boundaryField/east  -set "{type atmBoundaryLayerInletEpsilon; Uref \$Uref; Zref \$Zref; zDir (0 0 1); flowDir (#calc \"cos(\$flowAngle)\" #calc \"sin(\$flowAngle)\" 0); z0 uniform \$z0; zGround uniform 0.75;}" > /dev/null
+foamDictionary 0/epsilon -entry boundaryField/south -set "{type atmBoundaryLayerInletEpsilon; Uref \$Uref; Zref \$Zref; zDir (0 0 1); flowDir (#calc \"cos(\$flowAngle)\" #calc \"sin(\$flowAngle)\" 0); z0 uniform \$z0; zGround uniform 0.75;}" > /dev/null
+foamDictionary 0/epsilon -entry boundaryField/west  -set "{type zeroGradient;}" > /dev/null
+
+# Set k boundary conditions
+foamDictionary 0/k -entry boundaryField/north -set "{type zeroGradient;}" > /dev/null
+foamDictionary 0/k -entry boundaryField/east  -set "{type atmBoundaryLayerInletK; Uref \$Uref; Zref \$Zref; zDir (0 0 1); flowDir (#calc \"cos(\$flowAngle)\" #calc \"sin(\$flowAngle)\" 0); z0 uniform \$z0; zGround uniform 0.75;}" > /dev/null
+foamDictionary 0/k -entry boundaryField/south -set "{type atmBoundaryLayerInletK; Uref \$Uref; Zref \$Zref; zDir (0 0 1); flowDir (#calc \"cos(\$flowAngle)\" #calc \"sin(\$flowAngle)\" 0); z0 uniform \$z0; zGround uniform 0.75;}" > /dev/null
+foamDictionary 0/k -entry boundaryField/west  -set "{type zeroGradient;}" > /dev/null
+
+# Set nut boundary conditions
+foamDictionary 0/nut -entry boundaryField/north -set "{type calculated; value uniform 0;}" > /dev/null
+foamDictionary 0/nut -entry boundaryField/east  -set "{type calculated; value uniform 0;}"  > /dev/null
+foamDictionary 0/nut -entry boundaryField/south -set "{type calculated; value uniform 0;}" > /dev/null
+foamDictionary 0/nut -entry boundaryField/west  -set "{type calculated; value uniform 0;}" > /dev/null
+
+# Set p boundary conditions
+foamDictionary 0/p -entry boundaryField/north -set "{type totalPressure; value uniform 0; gamma 1; p0 uniform 0;}" > /dev/null
+foamDictionary 0/p -entry boundaryField/east  -set "{type zeroGradient;}" > /dev/null
+foamDictionary 0/p -entry boundaryField/south -set "{type zeroGradient;}" > /dev/null
+foamDictionary 0/p -entry boundaryField/west  -set "{type totalPressure; value uniform 0; gamma 1; p0 uniform 0;}" > /dev/null
