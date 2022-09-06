@@ -47,6 +47,7 @@ libs ("libatmosphericModels.so");
 
 functions
 {
+    #include "sampling/zagl10m"
     #include "sampling/M1"
     #include "sampling/M2"
     #include "sampling/M3"
