@@ -4,6 +4,13 @@ cd ${0%/*} || exit 1    # Run from this directory
 # Source tutorial run functions
 . $WM_PROJECT_DIR/bin/tools/RunFunctions
 
+
+
+#########################
+#   STEP 1: MESHING     #
+#########################
+
+
 # Extract stl file of the surface
 FILE=./constant/triSurface/Bolund_GeoTIFF_file.stl
 if [ ! -f "$FILE" ]; then
@@ -14,7 +21,7 @@ if [ ! -f "$FILE" ]; then
 fi
 
 # Set controlDict, fvSchemes, and fvSolution for the moveMesh solver
-cp -r 0.original 0
+mkdir -p 0 && cp 0.original/pointDisplacement 0/
 cp system/controlDict.moveMesh system/controlDict
 cp system/fvSchemes.moveMesh system/fvSchemes
 cp system/fvSolution.moveMesh system/fvSolution
@@ -24,35 +31,6 @@ cp system/dynamicMeshDict constant/dynamicMeshDict
 # --------------------
 echo 'Running blockMesh'
 blockMesh > log.blockMesh 2>&1
-
-# Set the inflow boundary conditions
-# ----------------------------------
-
-# Get wind direction from the setUp file
-wDir=$(foamDictionary -entry wDir -value setUp)
-if [[ $wDir -eq 0 ]]; then
-    wDirName="north"
-elif [[ $wDir -gt 0 && $wDir -lt 90 ]]; then
-    wDirName="northeast"
-elif [[ $wDir -eq 90 ]]; then
-    wDirName="east"
-elif [[ $wDir -gt 90 && $wDir -lt 180 ]]; then
-    wDirName="southeast"
-elif [[ $wDir -eq 180 ]]; then
-    wDirName="south"
-elif [[ $wDir -gt 180 && $wDir -lt 270 ]]; then
-    wDirName="southwest"
-elif [[ $wDir -eq 270 ]]; then
-    wDirName="west"
-elif [[ $wDir -gt 270 && $wDir -lt 360 ]]; then
-    wDirName="northwest"
-else
-    echo "Error: Wind direction must be in the range [0,360[" && exit 1
-fi
-
-# Run the particular wind direction script to set the boundary conditions
-echo "Setting boundary conditions corresponding to inflow from $wDirName"
-system/setBCs/setBC.$wDirName
 
 # Decompose the mesh (for moveMesh)
 # --------------------------------
@@ -103,18 +81,54 @@ done
 # Check mesh quality
 # ------------------
 echo 'Running checkMesh'
-checkMesh > log.checkMesh 2>&1
+checkMesh -latestTime > log.checkMesh 2>&1
+
+
+
+####################################
+#   STEP 2: RUNNING THE SOLVER     #
+####################################
+
 
 # Copy over the field variables from the zero folder
 # --------------------------------------------------
-latestTime=$(( 50 + $nRefinement ))
-echo "Copying field variables from 0 to $latestTime folder"
+latestTime=$(foamListTimes -latestTime)
+echo "Copying flow variables to $latestTime folder"
 
-cp 0/U $latestTime/U
-cp 0/epsilon $latestTime/epsilon
-cp 0/k $latestTime/k
-cp 0/nut $latestTime/nut
-cp 0/p $latestTime/p
+cp 0.original/U $latestTime/U
+cp 0.original/epsilon $latestTime/epsilon
+cp 0.original/k $latestTime/k
+cp 0.original/nut $latestTime/nut
+cp 0.original/p $latestTime/p
+
+# Set the inflow boundary conditions
+# ----------------------------------
+
+# Get wind direction from the setUp file
+wDir=$(foamDictionary -entry wDir -value setUp)
+if [[ $wDir -eq 0 ]]; then
+    wDirName="north"
+elif [[ $wDir -gt 0 && $wDir -lt 90 ]]; then
+    wDirName="northeast"
+elif [[ $wDir -eq 90 ]]; then
+    wDirName="east"
+elif [[ $wDir -gt 90 && $wDir -lt 180 ]]; then
+    wDirName="southeast"
+elif [[ $wDir -eq 180 ]]; then
+    wDirName="south"
+elif [[ $wDir -gt 180 && $wDir -lt 270 ]]; then
+    wDirName="southwest"
+elif [[ $wDir -eq 270 ]]; then
+    wDirName="west"
+elif [[ $wDir -gt 270 && $wDir -lt 360 ]]; then
+    wDirName="northwest"
+else
+    echo "Error: Wind direction must be in the range [0,360[" && exit 1
+fi
+
+# Run the particular wind direction script to set the boundary conditions
+echo "Setting boundary conditions corresponding to inflow from $wDirName"
+system/setBCs/setBC.$wDirName
 
 # Renumber mesh
 # -------------

@@ -15,6 +15,7 @@ FoamFile
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 #include        "../setUp"
+flowAngle       #calc "degToRad(270-$wDir)"; // Flow angle wrt x-axis
 
 dimensions      [ 0 2 -2 0 0 0 0 ];
 

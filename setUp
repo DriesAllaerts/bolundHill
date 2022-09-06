@@ -39,6 +39,3 @@ zMin           13.24885;    // Minimum z-extent of domain [m]
 xMax            191.875;    // Maximum x-extent of domain [m]
 yMax            117.875;    // Maximum y-extent of domain [m]
 zMax            40.8226;    // Maximum z-extent of domain [m]
-
-// Flow angle with respect to the x-axis
-flowAngle       #calc "degToRad(270-$wDir)"; // Flow angle [rad]
