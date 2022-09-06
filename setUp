@@ -13,6 +13,7 @@ nCores      2;
 Uref            10.0; // Reference wind speed [m/s]
 Zref            10.0; // Reference height above the surface [m]
 z0              0.01; // Surface roughness length [m]
+wDir            270;  // Wind direction [degrees]
 
 // Mesh parameters
 // - domain size

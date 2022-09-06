@@ -1,112 +1,62 @@
 /*--------------------------------*- C++ -*----------------------------------*\
-| =========                 |                                                 |
-| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  2.2.0                                 |
-|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
-|    \\/     M anipulation  |                                                 |
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  10
+     \\/     M anipulation  |
 \*---------------------------------------------------------------------------*/
 FoamFile
 {
-    version     2.0;
-    format      ascii;
-    class       volVectorField;
-    location    "0";
-    object      U;
+    format          ascii;
+    class           volVectorField;
+    location        "0";
+    object          U;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-#include "../setUp"
 
-dimensions      [0 1 -1 0 0 0 0];
+#include        "../setUp"
 
-internalField   uniform (0 0 0);
+dimensions      [ 0 1 -1 0 0 0 0 ];
+
+internalField   uniform ( 0 0 0 );
 
 boundaryField
 {
     east
     {
         type            pressureInletOutletVelocity;
-		value uniform (0 0 0);
+        value           uniform ( 0 0 0 );
     }
     north
     {
         type            pressureInletOutletVelocity;
-		value uniform (0 0 0);
+        value           uniform ( 0 0 0 );
     }
     south
     {
         type            pressureInletOutletVelocity;
-		value uniform (0 0 0);
+        value           uniform ( 0 0 0 );
     }
     west
     {
         type            atmBoundaryLayerInletVelocity;
         Uref            $Uref;
         Zref            $Zref;
-        zDir            (0 0 1);
-        flowDir         (1 0 0);
+        zDir            ( 0 0 1 );
+        flowDir         ( 1 0 0 );
         z0              uniform $z0;
         zGround         uniform 0.75;
     }
-  
     minZ
     {
         type            uniformFixedValue;
-        uniformValue    (0 0 0);
+        uniformValue    ( 0 0 0 );
     }
     maxZ
     {
         type            zeroGradient;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // ************************************************************************* //

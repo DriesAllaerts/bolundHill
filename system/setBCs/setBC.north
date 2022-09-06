@@ -1,0 +1,29 @@
+# Set U boundary conditions
+foamDictionary 0/U -entry boundaryField/north  -set "{type atmBoundaryLayerInletVelocity; Uref \$Uref; Zref \$Zref; zDir (0 0 1); flowDir (0 -1 0); z0 uniform \$z0; zGround uniform 0.75;}" > /dev/null
+foamDictionary 0/U -entry boundaryField/east  -set "{type pressureInletOutletVelocity; value uniform (0 0 0);}" > /dev/null
+foamDictionary 0/U -entry boundaryField/south -set "{type pressureInletOutletVelocity; value uniform (0 0 0);}" > /dev/null
+foamDictionary 0/U -entry boundaryField/west -set "{type pressureInletOutletVelocity; value uniform (0 0 0);}" > /dev/null
+
+# Set epsilon boundary conditions
+foamDictionary 0/epsilon -entry boundaryField/north  -set "{type atmBoundaryLayerInletEpsilon; Uref \$Uref; Zref \$Zref; zDir (0 0 1); flowDir (0 -1 0); z0 uniform \$z0; zGround uniform 0.75;}" > /dev/null
+foamDictionary 0/epsilon -entry boundaryField/east -set "{type slip;}" > /dev/null
+foamDictionary 0/epsilon -entry boundaryField/south  -set "{type inletOutlet; inletValue uniform 0.01; value uniform 0.01;}" > /dev/null
+foamDictionary 0/epsilon -entry boundaryField/west -set "{type slip;}" > /dev/null
+
+# Set k boundary conditions
+foamDictionary 0/k -entry boundaryField/north  -set "{type atmBoundaryLayerInletK; Uref \$Uref; Zref \$Zref; zDir (0 0 1); flowDir (0 -1 0); z0 uniform \$z0; zGround uniform 0.75;}" > /dev/null
+foamDictionary 0/k -entry boundaryField/east -set "{type slip;}" > /dev/null
+foamDictionary 0/k -entry boundaryField/south  -set "{type inletOutlet; inletValue uniform 1.3; value uniform 1.3;}" > /dev/null
+foamDictionary 0/k -entry boundaryField/west -set "{type slip;}" > /dev/null
+
+# Set nut boundary conditions
+foamDictionary 0/nut -entry boundaryField/north  -set "{type calculated; value uniform 0;}"  > /dev/null
+foamDictionary 0/nut -entry boundaryField/east -set "{type slip;}" > /dev/null
+foamDictionary 0/nut -entry boundaryField/south  -set "{type calculated; value uniform 0;}" > /dev/null
+foamDictionary 0/nut -entry boundaryField/west -set "{type slip;}" > /dev/null
+
+# Set p boundary conditions
+foamDictionary 0/p -entry boundaryField/north  -set "{type zeroGradient;}" > /dev/null
+foamDictionary 0/p -entry boundaryField/east  -set "{type totalPressure; value uniform 0; gamma 1; p0 uniform 0;}" > /dev/null
+foamDictionary 0/p -entry boundaryField/south -set "{type totalPressure; value uniform 0; gamma 1; p0 uniform 0;}" > /dev/null
+foamDictionary 0/p -entry boundaryField/west -set "{type totalPressure; value uniform 0; gamma 1; p0 uniform 0;}" > /dev/null

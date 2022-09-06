@@ -24,6 +24,35 @@ cp system/dynamicMeshDict constant/dynamicMeshDict
 echo 'Running blockMesh'
 blockMesh > log.blockMesh 2>&1
 
+# Set the inflow boundary conditions
+# ----------------------------------
+
+# Get wind direction from the setUp file
+wDir=$(foamDictionary -entry wDir -value setUp)
+if [[ $wDir -eq 0 ]]; then
+    wDirName="north"
+elif [[ $wDir -gt 0 && $wDir -lt 90 ]]; then
+    wDirName="northeast"
+elif [[ $wDir -eq 90 ]]; then
+    wDirName="east"
+elif [[ $wDir -gt 90 && $wDir -lt 180 ]]; then
+    wDirName="southeast"
+elif [[ $wDir -eq 180 ]]; then
+    wDirName="south"
+elif [[ $wDir -gt 180 && $wDir -lt 270 ]]; then
+    wDirName="southwest"
+elif [[ $wDir -eq 270 ]]; then
+    wDirName="west"
+elif [[ $wDir -gt 270 && $wDir -lt 360 ]]; then
+    wDirName="northwest"
+else
+    echo "Error: Wind direction must be in the range [0,360[" && exit 1
+fi
+
+# Run the particular wind direction script to set the boundary conditions
+echo "Setting boundary conditions corresponding to inflow from $wDirName"
+system/setBCs/setBC.$wDirName
+
 # Decompose the mesh (for moveMesh)
 # --------------------------------
 echo 'Running decomposePar'
