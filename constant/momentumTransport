@@ -12,12 +12,13 @@ FoamFile
     object      momentumTransport;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+#include "../setUp"
 
 simulationType RAS;
 
 RAS
 {
-    model               kEpsilon;
+    model               $turbModel;
 
     turbulence          on;
 

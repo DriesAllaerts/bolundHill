@@ -19,15 +19,15 @@ flowAngle       #calc "degToRad(270-$wDir)"; // Flow angle wrt x-axis
 
 dimensions      [ 0 2 -3 0 0 0 0 ];
 
-internalField   uniform 0.01;
+internalField   uniform $epsilon0;
 
 boundaryField
 {
     east
     {
         type            inletOutlet;
-        inletValue      uniform 0.01;
-        value           uniform 0.01;
+        inletValue      uniform $epsilon0;
+        value           uniform $epsilon0;
     }
     north
     {
