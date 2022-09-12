@@ -97,6 +97,7 @@ echo "Copying flow variables to $latestTime folder"
 
 cp 0.original/U $latestTime/U
 cp 0.original/epsilon $latestTime/epsilon
+cp 0.original/omega $latestTime/omega
 cp 0.original/k $latestTime/k
 cp 0.original/nut $latestTime/nut
 cp 0.original/p $latestTime/p

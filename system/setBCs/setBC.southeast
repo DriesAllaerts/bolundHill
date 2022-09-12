@@ -13,6 +13,12 @@ foamDictionary $latestTime/epsilon -entry boundaryField/east  -set "{type atmBou
 foamDictionary $latestTime/epsilon -entry boundaryField/south -set "{type atmBoundaryLayerInletEpsilon; Uref \$Uref; Zref \$Zref; zDir (0 0 1); flowDir (#calc \"cos(\$flowAngle)\" #calc \"sin(\$flowAngle)\" 0); z0 uniform \$z0; zGround uniform 0.75;}" > /dev/null
 foamDictionary $latestTime/epsilon -entry boundaryField/west  -set "{type zeroGradient;}" > /dev/null
 
+# Set omega boundary conditions
+foamDictionary $latestTime/omega -entry boundaryField/north -set "{type slip;}" > /dev/null
+foamDictionary $latestTime/omega -entry boundaryField/east  -set "{type fixedValue; value uniform \$omega0;}" > /dev/null
+foamDictionary $latestTime/omega -entry boundaryField/south -set "{type fixedValue; value uniform \$omega0;}" > /dev/null
+foamDictionary $latestTime/omega -entry boundaryField/west  -set "{type slip;}" > /dev/null
+
 # Set k boundary conditions
 foamDictionary $latestTime/k -entry boundaryField/north -set "{type zeroGradient;}" > /dev/null
 foamDictionary $latestTime/k -entry boundaryField/east  -set "{type atmBoundaryLayerInletK; Uref \$Uref; Zref \$Zref; zDir (0 0 1); flowDir (#calc \"cos(\$flowAngle)\" #calc \"sin(\$flowAngle)\" 0); z0 uniform \$z0; zGround uniform 0.75;}" > /dev/null
