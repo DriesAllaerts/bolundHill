@@ -12,8 +12,10 @@ nCores      2;
 // Wind conditions
 Uref            10.0; // Reference wind speed [m/s]
 Zref            10.0; // Reference height above the surface [m]
-z0              0.01; // Surface roughness length [m]
 wDir            270;  // Wind direction [degrees]
+z0              0.01; // Default surface roughness length [m]
+// Optional: Specify different surface roughness for terrain [m]
+//z00             0.1;
 
 // Number of grid cells
 //   Suggested mesh size

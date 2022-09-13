@@ -43,7 +43,57 @@ boundaryField
     minZ
     {
         type            nutkAtmRoughWallFunction;
-        z0              uniform $z0;
+        // Set z0 value depending on whether surface boundary represents land or sea
+        z0              #codeStream
+        {
+            codeInclude
+            #{
+                #include "fvCFD.H"
+            #};
+
+            codeOptions
+            #{
+                -I$(LIB_SRC)/finiteVolume/lnInclude \
+                -I$(LIB_SRC)/meshTools/lnInclude
+            #};
+
+            codeLibs
+            #{
+                -lmeshTools \
+                -lfiniteVolume
+            #};
+
+            code
+            #{
+                // Get access to internal mesh information
+                const IOdictionary& d = static_cast<const IOdictionary&>(dict.parent().parent());
+                const fvMesh& mesh = refCast<const fvMesh>(d.db());
+
+                // Get the patch information
+                label patchID = mesh.boundaryMesh().findPatchID("minZ");
+                const fvPatch& boundaryPatch = mesh.boundary()[patchID];
+                const vectorField& Cf = boundaryPatch.Cf();
+
+                // Initialize scalarfield to zero
+                scalarField field(boundaryPatch.size(), 0.);
+
+                // Surface roughness length and groundlevel
+                scalar zGround(0.75);
+                scalar z0(d.lookupOrDefault<scalar>("z0",0.01));
+                scalar z00(d.lookupOrDefault<scalar>("z00",z0));
+
+                // Set z0 value per face in patch
+                forAll(field, faceI)
+                {
+                    field[faceI] = ( Cf[faceI][2] <= (zGround+0.01) ) * z0
+                                    + ( Cf[faceI][2] > (zGround+0.01) ) * z00;
+                }
+
+                //writeEntry(os, "uniform", 0.01);
+                // Write z0 field as dictionary field
+                writeEntry(os, "", field);
+            #};
+        };
         value           uniform 0;
     }
     maxZ
