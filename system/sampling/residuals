@@ -1,0 +1,16 @@
+residuals
+{
+    type           residuals;
+    functionObjectLibs ("libutilityFunctionObjects.so");
+    enabled        true;
+    writeControl   timeStep;
+    writeInterval  1;
+    fields
+    (
+        U
+        p
+        k
+        epsilon
+        omega
+    );
+}
