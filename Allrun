@@ -71,10 +71,10 @@ nRefinement=$(foamDictionary -entry nRefinement -value setUp)
 # topoSet and then apply refineMesh
 for ((i=1; i<=$nRefinement; i++))
 do
-    echo "Running topoSet (i=$i)"
+    echo "Running topoSet ($i out of $nRefinement)"
     topoSet -latestTime > log.topoSet.$i 2>&1
     
-    echo "Running refineMesh (i=$i)"
+    echo "Running refineMesh ($i out of $nRefinement)"
     refineMesh > log.refineMesh.$i 2>&1
 done
 

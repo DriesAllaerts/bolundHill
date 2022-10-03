@@ -4,6 +4,8 @@ transects
     functionObjectLibs   ("libsampling.so");
     enabled              true;
     interpolationScheme  cell;
+    writeControl         timeStep;
+    writeInterval        100;
     surfaceFormat        vtk;
     fields
     (
