@@ -5,7 +5,7 @@ transects
     enabled              true;
     interpolationScheme  cell;
     writeControl         timeStep;
-    writeInterval        100;
+    writeInterval        50;
     surfaceFormat        vtk;
     fields
     (
