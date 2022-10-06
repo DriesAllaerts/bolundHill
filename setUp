@@ -22,12 +22,12 @@ z0              0.01; // Default surface roughness length [m]
 //   coarse - (53 46 5) and nRefinement = 1
 //   medium - (67 58 6) and nRefinement = 1
 //   fine   - (84 73 8) and nRefinement = 2
-nx              84;         // Number of cells in x-direction
-ny              73;         // Number of cells in y-direction
-nz              8;          // Number of cells in z-direction
+nx              53;         // Number of cells in x-direction
+ny              46;         // Number of cells in y-direction
+nz              5;          // Number of cells in z-direction
 
 // Number of refinements near the surface
-nRefinement     2;
+nRefinement     1;
 
 // Turbulence model
 // Tested with kEpsilon, kOmega, kOmegaSST, LaunderSharmaKE, RNGkEpsilon, realizableKE
